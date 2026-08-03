@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
 import { RendererService } from './renderer.service';
-import type { createProjectDto } from './dto/createProjectDto';
+import type { createCertificateDto, createProjectDto } from './dto/createProjectDto';
 import type { Response } from 'express';
 
 @Controller('render')
@@ -13,7 +13,6 @@ export class RendererController {
 
         const image = await this.rendererService.renderProject(payload);
 
-        console.log (res);
 
         res.set({
             "Content-Type": "image/png", 
@@ -21,5 +20,17 @@ export class RendererController {
         })
       
         res.send(image);
+    }
+
+    @Post("certificate")
+    async renderCertificate(@Body() payload: createCertificateDto, @Res() res: Response){
+        const image = await this.rendererService.renderCertificate(payload)
+
+        res.set({
+            "Content-Type": "image/png", 
+            "Content-length": image.length
+        })
+        
+        res.send(image)
     }
 }
