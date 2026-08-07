@@ -1,25 +1,25 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import * as puppeteer from 'puppeteer'
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { createCertificateDto, createProjectDto } from './dto/createProjectDto';
 import QRCode from 'qrcode';
 import { ConfigService } from '@nestjs/config';
+import { BrowserService } from './BrowserService.service';
+import { Browser } from 'puppeteer';
 
 @Injectable()
-export class RendererService implements OnModuleInit{
+export class RendererService {
 
-    private browser!: puppeteer.Browser;
-    
-    async onModuleInit() {
-        this.browser = await puppeteer.launch({
-            args: ['--no-sandbox'],
-        })
-    }
 
-    constructor(private configService: ConfigService){}
+    getBrowser() {
+     return this.browserService.getBrowser();
+    } 
+
+
+  
+    constructor(private configService: ConfigService, private browserService: BrowserService){}
 
     async renderProject(data: createProjectDto): Promise<Buffer>{
       
-        const page = await this.browser.newPage();
+        const page = this.getBrowser().newPage();
         const html = `<!DOCTYPE html>
           <html lang="en">
           <head>
@@ -201,16 +201,16 @@ export class RendererService implements OnModuleInit{
           </body>
           </html>`;
 
-      await page.setContent(html, {waitUntil: "networkidle0"})
-      await page.setViewport({
+      (await page).setContent(html, {waitUntil: "networkidle0"})
+      ;(await page).setViewport({
         width: 1200,
         height: 630
       })
-      const image = await page.screenshot({
+      const image = await (await page).screenshot({
         type: 'png'
       })
 
-      await page.close();
+      await (await page).close();
 
       return image as Buffer;
     }
@@ -236,7 +236,7 @@ export class RendererService implements OnModuleInit{
       let volunteerName = `${lastName.toUpperCase()} ${firstName.toUpperCase()}`
       let duration = `${this.parseDateTime(startDate)} - ${this.parseDateTime(endDate)}`
       
-      let page = await this.browser.newPage()
+      let page = await this.getBrowser().newPage()
       let html = `
       <!DOCTYPE html>
         <html lang="en">
@@ -376,7 +376,7 @@ export class RendererService implements OnModuleInit{
 
                         <!-- TEMPLATE_FIELD: Footer / Slogan / Sub-link text -->
                         <div class="mt-1">
-                            <a href="https://givr.app" id="cert-slogan" class="text-blue-600 hover:text-blue-700 underline font-semibold transition-all" style="font-size: 0.88rem;">
+                            <a href="https://givr.ng" id="cert-slogan" class="text-blue-600 hover:text-blue-700 underline font-semibold transition-all" style="font-size: 0.88rem;">
                                 Verified. Valued. Givr
                             </a>
                         </div>
@@ -487,7 +487,8 @@ export class RendererService implements OnModuleInit{
       `
       page.setContent(html, {waitUntil: 'networkidle0'})
       page.setViewport({width: 1600,
-        height: 900
+        height: 900,
+        deviceScaleFactor: 2
       })
 
       let image = await page.screenshot({
