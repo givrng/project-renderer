@@ -225,7 +225,7 @@ export class RendererService implements OnModuleInit{
     }
 
     async renderCertificate(payload: createCertificateDto){
-
+      console.log(payload)
       let {firstName, impactArea, endDate, lastName, organizationLogo, 
         projectTitle, startDate, certId, orgName} = payload
 
