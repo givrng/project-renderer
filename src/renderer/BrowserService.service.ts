@@ -8,7 +8,7 @@ export class BrowserService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     this.browser = await puppeteer.launch({
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+      executablePath: "/test",
       headless: true,
       args: [
         "--no-sandbox",
