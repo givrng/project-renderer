@@ -483,11 +483,11 @@ export class RendererService {
         </body>
         </html>
       `
-      page.setContent(html, {waitUntil: 'networkidle0'})
-      page.setViewport({width: 1600,
+      await page.setViewport({width: 1600,
         height: 900,
-        deviceScaleFactor: 2
+        deviceScaleFactor: 1
       })
+      await page.setContent(html, {waitUntil: 'networkidle0'})
 
       let image = await page.screenshot({
         omitBackground:false,
