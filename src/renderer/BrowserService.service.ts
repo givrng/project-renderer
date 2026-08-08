@@ -1,6 +1,5 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
-import { Browser } from "puppeteer";
-import puppeteer from "puppeteer-core";
+import puppeteer, { Browser } from "puppeteer";
 
 @Injectable()
 export class BrowserService implements OnModuleInit, OnModuleDestroy {
@@ -9,7 +8,6 @@ export class BrowserService implements OnModuleInit, OnModuleDestroy {
   async onModuleInit() {
     this.browser = await puppeteer.launch({
       headless: true,
-      channel: 'chrome',
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
