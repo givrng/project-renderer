@@ -228,7 +228,11 @@ export class RendererService {
 
       const baseUrl = this.configService.get('GIVR_DOMAIN')
       let verificationUrl = `${baseUrl}/cetificates/verify/${certId}`
-      let qrcode = await QRCode.toDataURL(verificationUrl)
+      let qrcode = await QRCode.toDataURL(verificationUrl, {
+        scale: 4,
+        width: 300,
+
+      })
 
       let volunteerName = `${lastName.toUpperCase()} ${firstName.toUpperCase()}`
       let duration = `${this.parseDateTime(startDate)} - ${this.parseDateTime(endDate)}`
@@ -338,7 +342,7 @@ export class RendererService {
                       <div class="relative flex flex-col items-end select-none" style="width: 14%;">
                           <div class="p-1 bg-white border border-slate-200 rounded-md shadow-sm">
                               <!-- Dynamic QR Code target. Replaced programmatically with absolute URL dynamically or printed static QR -->
-                              <img id="cert-qrcode" src="${qrcode}" alt="Verification QR Code" class="w-16 h-16 object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0d233a?text=QR+Code'">
+                              <img id="cert-qrcode" src="${qrcode}" alt="Verification QR Code" class="w-32 h-32 object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0d233a?text=QR+Code'">
                           </div>
                           <span class="text-[9px] text-slate-400 font-bold tracking-widest mt-1 uppercase text-right">Verify Online</span>
                       </div>
