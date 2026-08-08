@@ -8,8 +8,8 @@ export class BrowserService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     this.browser = await puppeteer.launch({
-      executablePath: "/test",
       headless: true,
+      channel: 'chrome',
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
@@ -23,7 +23,19 @@ export class BrowserService implements OnModuleInit, OnModuleDestroy {
     });
   }
 
-  getBrowser() {
+  async getBrowser() {
+    if (!this.browser?.connected) {
+    this.browser = await puppeteer.launch({
+      headless: true,
+      channel: 'chrome',
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+      ],
+    });
+  }
     return this.browser;
   }
 

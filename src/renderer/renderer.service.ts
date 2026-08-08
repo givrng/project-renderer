@@ -8,18 +8,15 @@ import { Browser } from 'puppeteer';
 @Injectable()
 export class RendererService {
 
-
-    getBrowser() {
-     return this.browserService.getBrowser();
+    async getBrowser() {
+     return await this.browserService.getBrowser();
     } 
-
-
   
     constructor(private configService: ConfigService, private browserService: BrowserService){}
 
     async renderProject(data: createProjectDto): Promise<Buffer>{
-      
-        const page = this.getBrowser().newPage();
+      const browser = await this.getBrowser();
+        const page = browser.newPage();
         const html = `<!DOCTYPE html>
           <html lang="en">
           <head>
@@ -236,7 +233,8 @@ export class RendererService {
       let volunteerName = `${lastName.toUpperCase()} ${firstName.toUpperCase()}`
       let duration = `${this.parseDateTime(startDate)} - ${this.parseDateTime(endDate)}`
       
-      let page = await this.getBrowser().newPage()
+      let browser = await this.getBrowser();
+      let page = await browser.newPage()
       let html = `
       <!DOCTYPE html>
         <html lang="en">
