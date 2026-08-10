@@ -457,7 +457,7 @@ export class RendererService {
                     <div class="flex flex-col items-center text-center" style="width: 28%;">
                         <!-- TEMPLATE_FIELD: Signer 1 Stylized Script Handwriting -->
                         <div id="cert-signer1-handwritten" class="signature-font text-slate-800 italic leading-none mb-1 select-none" style="font-size: 2.1rem;">
-                            <img src="stepSignature.jpeg" alt="Signature" srcset="" width="128" style="mix-blend-mode: multiply;">
+                            <img src="https://res.cloudinary.com/ddp01fdd8/image/upload/v1786368499/stepSignature_bxb9og.jpg" alt="Signature" srcset="" width="128" style="mix-blend-mode: multiply;">
                         </div>
                         <div class="w-full h-[1px] bg-slate-300 mb-2"></div>
                         <!-- TEMPLATE_FIELD: Signer 1 Legal Full Name -->
@@ -499,7 +499,7 @@ export class RendererService {
                     <div class="flex flex-col items-center text-center justify-end" style="width: 28%; min-height: 80px;">
                         <!-- Partner Logo Image Asset with fallback handler -->
                         <div class="h-25 flex items-end justify-center mb-1">
-                            <img id="${organizationLogo}" alt="Partner Logo" class="max-h-20 w-auto object-contain select-none" onerror="this.src='https://placehold.co/150x40/ffffff/1e62ec?text=${orgName}'">
+                            <img id="${orgName}" alt="Partner Logo" class="max-h-20 w-auto object-contain select-none" onerror=" src='https://placehold.co/150x40/ffffff/1e62ec?text=${orgName}'" src="${organizationLogo}">
                         </div>
                         <div class="w-full h-[1px] bg-slate-300 mb-2"></div>
                         <!-- TEMPLATE_FIELD: Signer 2 / Partner Official Title -->
