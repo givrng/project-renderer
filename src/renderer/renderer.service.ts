@@ -227,7 +227,7 @@ export class RendererService {
         projectTitle, startDate, certId, orgName} = payload
 
       const baseUrl = this.configService.get('GIVR_DOMAIN')
-      let verificationUrl = `${baseUrl}/cetificates/verify?cert=${certId}`
+      let verificationUrl = `${baseUrl}/certificates/verify?cert=${certId}`
       let qrcode = await QRCode.toDataURL(verificationUrl, {
         scale: 4,
         width: 300,
